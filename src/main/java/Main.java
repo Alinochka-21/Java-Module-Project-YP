@@ -1,40 +1,40 @@
-import java.util.ArrayList;
-import  java.util.Scanner;
+import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) {
+    void main() {
         Scanner input = new Scanner(System.in);
 
-        ArrayList<Car> cars = new ArrayList<>();
-        cars.add(new Car());
-        cars.add(new Car());
-        cars.add(new Car());
+        int MAXSPEED = 250;
+        int MINSPEED = 0;
+        int COUNTOFCARS = 3;
+        int maxDistance = 0;
+        Car winner = new Car(null, 0);
 
-        System.out.println("Привет! Сейчас тебе надо ввести данные о трех машинах, просто следуй инструкциям :)");
-
-        for (Car car : cars) {
+        for (int i = 0; i < COUNTOFCARS; i++) {
             System.out.println("Введите имя машины:");
-            car.name = input.next();
+            Car car = new Car(input.next(), 0);
             while (true) {
-                System.out.println("Введите скорость машины - просто напишите целое число от 1 до 250 включительно:");
+                System.out.printf("Введите скорость машины - просто напишите целое число от %s до %s включительно: \n", MINSPEED + 1, MAXSPEED);
                 if (input.hasNextInt()) {
                     car.speed = input.nextInt();
-                    if (car.speed > 0 && car.speed <= 250) {
+                    if (car.speed > MINSPEED && car.speed <= MAXSPEED) {
                         break;
                     } else {
                         System.out.println("Скорость, которую ты ввел, находится в неправильном диапазоне. Попробуй еще раз");
                     }
-                } else{
+                } else {
                     System.out.println("Ты ввел не целое число или не число вовсе. Попробуй еще раз");
                     input.next();
                 }
 
             }
+            car.drive();
+            if (maxDistance < car.distance) {
+                maxDistance = car.distance;
+                winner = car;
+            }
+
         }
         input.close();
-
-        Race winner = new Race();
-        winner.drive(cars);
+        System.out.printf("Самая быстрая машина: %s \n", winner.name);
     }
-
-
 }
