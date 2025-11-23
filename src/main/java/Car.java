@@ -13,3 +13,4 @@ public class Car {
         this.distance = 24 * speed;
     }
 }
+
